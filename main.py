@@ -20,7 +20,82 @@ def validTransaction(board, col):
 
 def makeTransaction(board, col, row, piece):
     board[row][col] = piece
-
+def fullBoard(board):
+    for j in range (COLUMNS):
+        if board[0][j] == 0:
+            return 0
+    return 1;
+def checkWinner(board):
+  player=0
+  AIagent=0
+  rows=len(board)
+  columns=len(board[0])
+  for i in range (rows):
+    for j in range (columns):
+      count=0
+      m=i
+      while m+1 < rows and board[m+1][j]==board[i][j] :
+        count=count+1
+        m=m+1
+        if count == 3:
+          print("horizontal")
+          print(board[i][j])
+          print(i,j)
+          if board[i][j]==1:
+            player=player+1
+          else:
+            AIagent=AIagent+1
+      count=0
+      n=j
+      while n+1 < columns and board[i][n+1]==board[i][j]:
+        count=count+1
+        n=n+1
+        if count == 3:
+          print("vertical")
+          print(board[i][j])
+          print(i,j)
+          if board[i][j]==1:
+            player=player+1
+          else:
+            AIagent=AIagent+1
+      count=0
+      m=i
+      n=j
+      while m+1 < rows and n+1 < columns and board[m+1][n+1]==board[i][j]:
+        count=count+1
+        m=m+1
+        n=n+1
+        if count == 3:
+          print("diagonal")
+          print(board[i][j])
+          print(i,j)
+          if board[i][j]==1:
+            player=player+1
+          else:
+            AIagent=AIagent+1
+      count = 0
+      m = i
+      n = j
+      while m + 1 < rows and n - 1 >= 0 and board[m + 1][n - 1] == board[i][j]:
+          count = count + 1
+          m = m + 1
+          n = n - 1
+          if count == 3:
+              print("diagonal")
+              print(board[i][j])
+              print(i, j)
+              if board[i][j] == 1:
+                  player = player + 1
+              else:
+                  AIagent = AIagent + 1
+  print(player)
+  print(AIagent)
+  if(player==AIagent):
+      print("stalement!")
+  elif(player>AIagent):
+      print("player wins congratulations !")
+  else:
+      print("AI agent wins !")
 
 def showBoard(board):
     for col in range(COLUMNS):
@@ -61,7 +136,7 @@ pygame.display.update()
 # print(current_root.board)
 
 
-while not boardFull:
+while not fullBoard(board):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
@@ -107,3 +182,4 @@ while not boardFull:
                 turn = 1
             print(board)
             showBoard(board)
+checkWinner(board)
