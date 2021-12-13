@@ -57,6 +57,12 @@ def calc_h(connect):
 
 def score_h(board):
     h = 0
+
+    ## Score center
+    center_array = [int(i) for i in list(board[:, cols_num//2])]
+    center_count = center_array.count(agent_num)
+    h += center_count * 4
+    
     ## Score Horizontal
     for r in range(rows_num):
         row_array = [int(i) for i in list(board[r,:])]
