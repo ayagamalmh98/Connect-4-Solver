@@ -201,7 +201,7 @@ def best_path(node, final_score):
     path = []
     path.append(node.board)
     current = node
-    depth = 7
+    depth = 4
     print("hereu")
 
     while (not (is_terminal(current.board))) and depth > 0:
@@ -213,7 +213,6 @@ def best_path(node, final_score):
     print("hered")
 
     return path
-
 
 
 
