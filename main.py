@@ -47,6 +47,15 @@ while not boardFull:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
+        if event.type == pygame.MOUSEMOTION:
+            pygame.draw.rect(screen, (0,0,0), (0, 0, width, SQUARESIZE))
+            posx=event.pos[0]
+            if turn == 1:
+                pygame.draw.circle(screen,(166,128,105), (posx,int(SQUARESIZE / 2)),  int(SQUARESIZE / 2 - 10))
+            elif turn == 2:
+                pygame.draw.circle(screen, (198, 91, 80), (posx,int(SQUARESIZE / 2)),  int(SQUARESIZE / 2 - 10))
+        pygame.display.update()
+
         if event.type == pygame.MOUSEBUTTONDOWN:
             #player turn
 
