@@ -1,3 +1,11 @@
+
+
+
+
+
+
+
+
 import copy
 
 import numpy as np
@@ -28,11 +36,10 @@ class Node:
         self.children.append(child)
 
 
-def calc_h(connect, player):
+def calc_h(connect):
     h = 0
+    player = agent_num
     opponent = player_num
-    if player == player_num:
-        opponent = agent_num
 
     if connect.count(player) == 2 and connect.count(0) == 2:
         h += 2
@@ -40,7 +47,7 @@ def calc_h(connect, player):
         h += 5
     elif connect.count(player) == 4:
         h += 1000
-
+        
     if connect.count(opponent) == 2 and connect.count(0) == 2:
         h -= 2
     elif connect.count(opponent) == 3 and connect.count(0) == 1:
@@ -48,35 +55,31 @@ def calc_h(connect, player):
 
     return h
 
-
-def score_h(board, player):
+def score_h(board):
     h = 0
     ## Score Horizontal
     for r in range(rows_num):
-        row_array = [int(i) for i in list(board[r, :])]
-        for c in range(cols_num - 3):
-            connect = row_array[c:c + connect4]
-            h += calc_h(connect, player)
+        row_array = [int(i) for i in list(board[r,:])]
+        for c in range(cols_num-3):
+            connect = row_array[c:c+connect4]
+            h += calc_h(connect)
     ## Score Vertical
     for c in range(cols_num):
-        col_array = [int(i) for i in list(board[:, c])]
-        for r in range(rows_num - 3):
-            connect = col_array[r:r + connect4]
-            h += calc_h(connect, player)
+        col_array = [int(i) for i in list(board[:,c])]
+        for r in range(rows_num-3):
+            connect = col_array[r:r+connect4]
+            h += calc_h(connect)
     ## Score diagonal
-    for r in range(rows_num - 3):
-        for c in range(cols_num - 3):
-            connect = [board[r + i][c + i] for i in range(connect4)]
-            h += calc_h(connect, player)
+    for r in range(rows_num-3):
+        for c in range(cols_num-3):
+            connect = [board[r+i][c+i] for i in range(connect4)]
+            h += calc_h(connect)
 
-    for r in range(rows_num - 3):
-        for c in range(cols_num - 3):
-            connect = [board[r + 3 - i][c + i] for i in range(connect4)]
-            h += calc_h(connect, player)
+    for r in range(rows_num-3):
+        for c in range(cols_num-3):
+            connect = [board[r+3-i][c+i] for i in range(connect4)]
+            h += calc_h(connect)
     return h
-
-
-
 
 
 def get_next_valid_slot(board, col):
@@ -188,8 +191,3 @@ while True:
     pass
     #min_max(new_root,7,True)
     #player turn now
-
-
-
-
-
