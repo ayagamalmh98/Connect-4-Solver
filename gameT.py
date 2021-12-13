@@ -40,10 +40,10 @@ def calc_h(connect):
 
     if connect.count(player) == 2 and connect.count(0) == 2:
         h += 2
-    elif connect.count(player) == 3 and connect.count(0) == 1:
+    if connect.count(player) == 3 and connect.count(0) == 1:
         h += 5
     elif connect.count(player) == 4:
-        h += 1000
+        h += 100
 
     if connect.count(opponent) == 2 and connect.count(0) == 2:
         h -= 2
@@ -120,7 +120,7 @@ def min_max_ab(board, depth,alpha, beta, maximizing_player):
     #board = node.current_board
 
     if is_terminal(board) or depth == 0:
-        return score_h(board),None
+        return score_h(board), None
     if maximizing_player:
         v = -math.inf
         children = get_children(board, True)
@@ -213,8 +213,6 @@ def best_path(node, final_score):
     print("hered")
 
     return path
-
-
 
 
 
