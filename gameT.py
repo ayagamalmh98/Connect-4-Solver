@@ -20,20 +20,6 @@ str_board = "".join(str(i) for i in flatten_board)
 set = {str_board: 1}
 
 
-class Node:
-
-    def __init__(self, board, score):
-        self.children = []
-        self.board = board
-        self.score = score
-
-    def add_child(self, child):
-       self.children.append(child)
-    def set_board(self, board):
-        self.board = board
-
-
-
 
 
 def calc_h(connect):
@@ -46,10 +32,9 @@ def calc_h(connect):
         h += 20
 
     if connect.count(player_num) == 3 and connect.count(0) == 1:
-        h -= 30
+        h -= 25
     elif connect.count(player_num) == 2 and connect.count(0) == 2:
         h -= 3
-
 
     return h
 
@@ -93,7 +78,7 @@ def get_next_valid_slot(board, col):
 
 
 def get_children(board, maximizing_player):
-   # board = node.current_board
+
     children = []
     for col in range(cols_num):
         if board[0][col] == 0:
@@ -104,7 +89,6 @@ def get_children(board, maximizing_player):
             else:
                 child_board[row][col] = player_num
 
-            #child_node = Node(child_board, score_h(child_board))
             children.append(child_board)
     return children
 
@@ -117,7 +101,7 @@ def is_terminal(board):
 
 
 def min_max_ab(board, depth,alpha, beta, maximizing_player, nodes):
-    #board = node.current_board
+
     flatten_board = board.flatten()
     str_node = "".join(str(i) for i in flatten_board)
     nodes[str_node] = []
@@ -128,9 +112,9 @@ def min_max_ab(board, depth,alpha, beta, maximizing_player, nodes):
         v = -math.inf
         children = get_children(board, True)
 
-        choosen_child = children[0]
+        choosen_child = random.choice(children)
+
         for child in children:
-            # node.add_child(child)
             flatten_board = child.flatten()
             str_board = "".join(str(i) for i in flatten_board)
             if not (str_board in set):
@@ -144,18 +128,17 @@ def min_max_ab(board, depth,alpha, beta, maximizing_player, nodes):
                 alpha = max(alpha, v)
                 if alpha >= beta:
                     break
-        return v,choosen_child
+        return v, choosen_child
     else:
         v = math.inf
         children = get_children(board, False)
-        choosen_child = children[0]
+        choosen_child = random.choice(children)
         for child in children:
             flatten_board = child.flatten()
             str_board = "".join(str(i) for i in flatten_board)
             if not (str_board in set):
                 nodes[str_node].append(str_board)
                 set[str_board] = 1
-                # node.add_child(child)
                 value = min_max(child, depth - 1, True,nodes)[0]
                 if value < v:
                     choosen_child = child
@@ -163,15 +146,15 @@ def min_max_ab(board, depth,alpha, beta, maximizing_player, nodes):
             beta = min(beta, v)
             if alpha >= beta:
                 break
-            #node.score = v
-        return v,choosen_child
+
+        return v, choosen_child
 
 
 
 
 
 def min_max(board, depth, maximizing_player,nodes):
-    # board = node.current_board
+
     flatten_board = board.flatten()
     str_node = "".join(str(i) for i in flatten_board)
     nodes[str_node] = []
@@ -181,7 +164,7 @@ def min_max(board, depth, maximizing_player,nodes):
         v = -math.inf
         children = get_children(board, True)
 
-        choosen_child = children[0]
+        choosen_child = random.choice(children)
         for child in children:
             # node.add_child(child)
             flatten_board = child.flatten()
@@ -193,41 +176,24 @@ def min_max(board, depth, maximizing_player,nodes):
                 if value > v:
                     choosen_child = child
                     v = value
-                # no = {}de.score = v
         return v, choosen_child
     else:
         v = math.inf
         children = get_children(board, False)
-        choosen_child = children[0]
+        choosen_child = random.choice(children)
         for child in children:
             flatten_board = child.flatten()
             str_board = "".join(str(i) for i in flatten_board)
             if not (str_board in set):
                 nodes[str_node].append(str_board)
                 set[str_board] = 1
-                # node.add_child(child)
                 value = min_max(child, depth - 1, True,nodes)[0]
                 if value < v:
                     choosen_child = child
                     v = value
-            # node.score = v
+
         return v, choosen_child
 
 
 
-def best_path(node, final_score):
-    path = []
-    path.append(node.board)
-    current = node
-    depth = 4
-    print("hereu")
 
-    while (not (is_terminal(current.board))) and depth > 0:
-        for child in current.children:
-            if child.score == final_score:
-                path.append(child.board)
-                current = child
-                break
-    print("hered")
-
-    return path

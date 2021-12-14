@@ -188,7 +188,23 @@ while not fullBoard(board):
             # AI agent turn
             elif turn == 2:
                 nodes = {}
-                best_score_now, child_board = gameT.min_max_ab(board, 6, -math.inf, math.inf, True, nodes)
+                best_score_now, child_board = gameT.min_max_ab(board, 4, -math.inf, math.inf, True, nodes)
+
+                for node in nodes:
+                    print("node")
+                    map_object = map(int, node)
+                    node1d = list(map_object)
+                    node2d = np.reshape(node1d, (-1, COLUMNS))
+                    print(node2d)
+                    print("children")
+                    for child in nodes[node]:
+                        map_object = map(int, child)
+                        arr1d = list(map_object)
+                        # print("child")
+                        arr2d = np.reshape(arr1d, (-1, COLUMNS))
+                        print(arr2d)
+                    print("****************************************")
+                print("#################################################################################")
 
 
 
@@ -203,8 +219,8 @@ while not fullBoard(board):
                 # if row != -1:
                 #   makeTransaction(board, col, row, turn)
                 turn = 1
-            print("board")
-            print(board)
+            #print("board")
+            #print(board)
 
             showBoard(board)
 
