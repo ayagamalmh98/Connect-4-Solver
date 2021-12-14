@@ -8,7 +8,8 @@ import gameT
 COLUMNS = 7
 ROWS = 6
 SQUARESIZE = 100
-
+agent_num = 2
+player_num = 1
 
 def validTransaction(board, col):
     if board[0][col] == 0:
@@ -65,7 +66,8 @@ def fullBoard(board):
     for j in range (COLUMNS):
         if board[0][j] == 0:
             return 0
-    return 1;
+    return 1
+  
 def checkWinner(board):
   player=0
   AIagent=0
@@ -138,6 +140,11 @@ def checkWinner(board):
   else:
       print("AI agent wins !")
 
+def get_next_valid_slot(board, col):
+    for i in reversed((range(ROWS))):
+        if board[i][col] == 0:
+            return i
+
 while not fullBoard(board):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -165,13 +172,15 @@ while not fullBoard(board):
                     # new_root = gameT.Node(board, 0)
                     # current_root = new_root
                     turn = 2
-
-
-            # AI agent turn
-            elif turn == 2:
-                print("Here1")
-                best_score_now, child_board = gameT.min_max(board, 1, True)
-                board = child_board
+    # AI agent turn
+    if turn == 2:
+        best_score_now, chosen_col = gameT.min_max(board, 5, True)
+        if board[0][chosen_col] == 0:
+            row = get_next_valid_slot(board, chosen_col)
+            board[row][chosen_col] = agent_num
+        turn = 1
+        print(board)
+        showBoard(board)
                 # new_root = gameT.Node(board, 0)
                 # current_root = new_root
                 # valid move
@@ -181,8 +190,5 @@ while not fullBoard(board):
 
                 # if row != -1:
                 #   makeTransaction(board, col, row, turn)
-                turn = 1
-            print(board)
-            showBoard(board)
-
+      
 checkWinner(board)
