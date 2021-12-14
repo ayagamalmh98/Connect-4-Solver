@@ -8,8 +8,7 @@ import gameT
 COLUMNS = 7
 ROWS = 6
 SQUARESIZE = 100
-agent_num = 2
-player_num = 1
+
 
 def validTransaction(board, col):
     if board[0][col] == 0:
@@ -44,7 +43,7 @@ def showBoard(board):
     pygame.display.update()
 
 
-board = np.zeros((ROWS, COLUMNS))
+board = np.zeros((ROWS, COLUMNS)).astype(int)
 
 boardFull = False
 turn = 1
@@ -57,93 +56,91 @@ screen = pygame.display.set_mode((width, length))
 showBoard(board)
 pygame.display.update()
 
+
 # current_root = gameT.Node(board, gameT.score_h(board))
 # print("current_root.board")
 # print(current_root.board)
 
 
 def fullBoard(board):
-    for j in range (COLUMNS):
+    for j in range(COLUMNS):
         if board[0][j] == 0:
             return 0
-    return 1
-  
-def checkWinner(board):
-  player=0
-  AIagent=0
-  rows=len(board)
-  columns=len(board[0])
-  for i in range (rows):
-    for j in range (columns):
-      count=0
-      m=i
-      while m+1 < rows and board[m+1][j]==board[i][j] :
-        count=count+1
-        m=m+1
-        if count == 3:
-          print("horizontal")
-          print(board[i][j])
-          print(i,j)
-          if board[i][j]==1:
-            player=player+1
-          else:
-            AIagent=AIagent+1
-      count=0
-      n=j
-      while n+1 < columns and board[i][n+1]==board[i][j]:
-        count=count+1
-        n=n+1
-        if count == 3:
-          print("vertical")
-          print(board[i][j])
-          print(i,j)
-          if board[i][j]==1:
-            player=player+1
-          else:
-            AIagent=AIagent+1
-      count=0
-      m=i
-      n=j
-      while m+1 < rows and n+1 < columns and board[m+1][n+1]==board[i][j]:
-        count=count+1
-        m=m+1
-        n=n+1
-        if count == 3:
-          print("diagonal")
-          print(board[i][j])
-          print(i,j)
-          if board[i][j]==1:
-            player=player+1
-          else:
-            AIagent=AIagent+1
-      count = 0
-      m = i
-      n = j
-      while m + 1 < rows and n - 1 >= 0 and board[m + 1][n - 1] == board[i][j]:
-          count = count + 1
-          m = m + 1
-          n = n - 1
-          if count == 3:
-              print("diagonal")
-              print(board[i][j])
-              print(i, j)
-              if board[i][j] == 1:
-                  player = player + 1
-              else:
-                  AIagent = AIagent + 1
-  print(player)
-  print(AIagent)
-  if(player==AIagent):
-      print("stalement!")
-  elif(player>AIagent):
-      print("player wins congratulations !")
-  else:
-      print("AI agent wins !")
+    return 1;
 
-def get_next_valid_slot(board, col):
-    for i in reversed((range(ROWS))):
-        if board[i][col] == 0:
-            return i
+
+def checkWinner(board):
+    player = 0
+    AIagent = 0
+    rows = len(board)
+    columns = len(board[0])
+    for i in range(rows):
+        for j in range(columns):
+            count = 0
+            m = i
+            while m + 1 < rows and board[m + 1][j] == board[i][j]:
+                count = count + 1
+                m = m + 1
+                if count == 3:
+                    print("horizontal")
+                    print(board[i][j])
+                    print(i, j)
+                    if board[i][j] == 1:
+                        player = player + 1
+                    else:
+                        AIagent = AIagent + 1
+            count = 0
+            n = j
+            while n + 1 < columns and board[i][n + 1] == board[i][j]:
+                count = count + 1
+                n = n + 1
+                if count == 3:
+                    print("vertical")
+                    print(board[i][j])
+                    print(i, j)
+                    if board[i][j] == 1:
+                        player = player + 1
+                    else:
+                        AIagent = AIagent + 1
+            count = 0
+            m = i
+            n = j
+            while m + 1 < rows and n + 1 < columns and board[m + 1][n + 1] == board[i][j]:
+                count = count + 1
+                m = m + 1
+                n = n + 1
+                if count == 3:
+                    print("diagonal")
+                    print(board[i][j])
+                    print(i, j)
+                    if board[i][j] == 1:
+                        player = player + 1
+                    else:
+                        AIagent = AIagent + 1
+            count = 0
+            m = i
+            n = j
+            while m + 1 < rows and n - 1 >= 0 and board[m + 1][n - 1] == board[i][j]:
+                count = count + 1
+                m = m + 1
+                n = n - 1
+                if count == 3:
+                    print("diagonal")
+                    print(board[i][j])
+                    print(i, j)
+                    if board[i][j] == 1:
+                        player = player + 1
+                    else:
+                        AIagent = AIagent + 1
+    print(player)
+    print(AIagent)
+    if (player == AIagent):
+        print("stalement!")
+    elif (player > AIagent):
+        print("player wins congratulations !")
+    else:
+        print("AI agent wins !")
+
 
 while not fullBoard(board):
     for event in pygame.event.get():
@@ -161,8 +158,8 @@ while not fullBoard(board):
         if event.type == pygame.MOUSEBUTTONDOWN:
             # player turn
 
-            print("for player", turn)
-            print("choose col")
+            #print("for player", turn)
+            #print("choose col")
             if turn == 1:
                 posx = event.pos[0]
                 col = int(math.floor(posx / SQUARESIZE) - 1)
@@ -172,15 +169,16 @@ while not fullBoard(board):
                     # new_root = gameT.Node(board, 0)
                     # current_root = new_root
                     turn = 2
-    # AI agent turn
-    if turn == 2:
-        best_score_now, chosen_col = gameT.min_max(board, 5, True)
-        if board[0][chosen_col] == 0:
-            row = get_next_valid_slot(board, chosen_col)
-            board[row][chosen_col] = agent_num
-        turn = 1
-        print(board)
-        showBoard(board)
+
+
+            # AI agent turn
+            elif turn == 2:
+                nodes = {}
+                best_score_now, child_board = gameT.min_max_ab(board, 6, -math.inf, math.inf, True, nodes)
+
+
+
+                board = child_board
                 # new_root = gameT.Node(board, 0)
                 # current_root = new_root
                 # valid move
@@ -190,5 +188,11 @@ while not fullBoard(board):
 
                 # if row != -1:
                 #   makeTransaction(board, col, row, turn)
-      
+                turn = 1
+            print("board")
+            print(board)
+
+            showBoard(board)
+
 checkWinner(board)
+sys.exit()
