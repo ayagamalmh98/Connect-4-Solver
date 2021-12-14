@@ -46,7 +46,7 @@ def calc_h(connect):
         h += 20
 
     if connect.count(player_num) == 3 and connect.count(0) == 1:
-        h -= 25
+        h -= 30
     elif connect.count(player_num) == 2 and connect.count(0) == 2:
         h -= 3
 
