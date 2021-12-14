@@ -40,10 +40,13 @@ def calc_h(connect):
     if connect.count(agent_num) == 3 and connect.count(0) == 1:
         h += 5
     elif connect.count(agent_num) == 4:
-        h += 100
+        h += 20
 
     if connect.count(player_num) == 3 and connect.count(0) == 1:
-        h -= 4
+        h -= 25
+    elif connect.count(player_num) == 2 and connect.count(0) == 2:
+        h -= 3
+
 
     return h
 
@@ -53,7 +56,7 @@ def score_h(board):
     ## Score center
     center_arr = [int(i) for i in list(board[:, cols_num // 2])]
     center_count = center_arr.count(agent_num)
-    h += center_count * 3
+    h += center_count * 4
 
     ## Score Horizontal
     for r in range(rows_num):
