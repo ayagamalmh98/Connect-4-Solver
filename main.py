@@ -4,6 +4,11 @@ import sys
 import math
 import copy
 import gameT
+from tkinter import *
+
+from tkinter import messagebox
+
+
 
 COLUMNS = 7
 ROWS = 6
@@ -134,12 +139,21 @@ def checkWinner(board):
                         AIagent = AIagent + 1
     print(player)
     print(AIagent)
+
+
     if (player == AIagent):
-        print("stalement!")
+        Tk().wm_withdraw()
+        messagebox.showinfo("results","stalemate !")
+        print("stalemate !")
     elif (player > AIagent):
-        print("player wins congratulations !")
+        Tk().wm_withdraw()
+        messagebox.showinfo("results","congrats!, you win ")
+        print("congrats!, you win ")
     else:
-        print("AI agent wins !")
+        Tk().wm_withdraw()
+        messagebox.showinfo("results","hard luck !")
+        print("AI agent wins ")
+
 
 
 while not fullBoard(board):
